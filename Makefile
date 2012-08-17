@@ -24,6 +24,11 @@ seturgent: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
+readme:
+	@echo creating README
+	@groff -T utf8 -man < seturgent.1 | col -bx | \
+		sed "s@VERSION@${VERSION}@g" > README
+
 clean:
 	@echo cleaning
 	@rm -f seturgent ${OBJ} seturgent-${VERSION}.tar.gz
@@ -53,4 +58,4 @@ uninstall:
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
 	@rm -f ${DESTDIR}${MANPREFIX}/man1/seturgent.1
 
-.PHONY: all options clean dist install uninstall
+.PHONY: all readme options clean dist install uninstall
