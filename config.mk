@@ -1,4 +1,4 @@
-# seturgent version
+# xseturgent version
 VERSION = 1.5
 
 # Customize below to fit your system

@@ -1,12 +1,12 @@
-SETURGENT(1)                                                      SETURGENT(1)
+XSETURGENT(1)                                                      XSETURGENT(1)
 
 
 
 NAME
-       seturgent - set an applications urgency hint (or not)
+       xseturgent - set an applications urgency hint (or not)
 
 SYNOPSIS
-       seturgent <winid> [0|1]
+       xseturgent <winid> [0|1]
 
 OPTIONS
        <winid>
@@ -15,7 +15,7 @@ OPTIONS
        [0|1]  0 to unset, 1 to set, if not specified 1 is the default.
 
 DESCRIPTION
-       seturgent can set or unset an applications urgency hint
+       xseturgent can set or unset an applications urgency hint
 
 SEE ALSO
        xprop(1) xwininfo(1)
@@ -25,4 +25,4 @@ BUGS
 
 
 
-                               seturgent-1.5                  SETURGENT(1)
+                               xseturgent-1.5                  XSETURGENT(1)
