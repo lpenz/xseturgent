@@ -6,6 +6,9 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
+#define PROGRAM_NAME "xseturgent"
+#define PROGRAM_VERSION "1:1.5"
+
 static void
 die(const char *s)
 {
@@ -44,7 +47,7 @@ main(int argc, char **argv)
 	if (argc < 2 || !strcmp(argv[1], "-h")) /* help / usage */
 		die("Usage: xseturgent <winid> [0|1]\n");
 	if (argc == 2 && !strcmp(argv[1], "-v")) /* version */
-		die("xseturgent-"VERSION" © 2010-2017 xseturgent engineer, see " \
+		die("xseturgent-"PROGRAM_VERSION" © 2010-2017 xseturgent engineer, see " \
 		    "LICENSE file for details.\n");
 	if (!(dpy = XOpenDisplay(NULL)))
 		die("xseturgent: unable to open display.\n");

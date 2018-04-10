@@ -1,7 +1,12 @@
 ---
 language: c
 script:
-  - make
+  - SRC_DIR=$PWD
+  - mkdir ../build ../install
+  - cd ../build
+  - cmake -DCMAKE_INSTALL_PREFIX=../install "$SRC_DIR"
+  - make VERBOSE=1
+  - make install
 jobs:
   include:
     - env: [ ACTION=build ]
