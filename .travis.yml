@@ -1,0 +1,11 @@
+---
+language: c
+script:
+  - make
+jobs:
+  include:
+    - env: [ ACTION=build ]
+      compiler: gcc
+    - env: [ ACTION=build ]
+      compiler: clang
+
