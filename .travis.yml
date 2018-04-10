@@ -1,12 +1,14 @@
 ---
+addons: { apt: { packages: [ xfonts-base ] } }
 language: c
 script:
-  - SRC_DIR=$PWD
-  - mkdir ../build ../install
-  - cd ../build
-  - cmake -DCMAKE_INSTALL_PREFIX=../install "$SRC_DIR"
+  - mkdir _build _install
+  - cd _build
+  - cmake -DCMAKE_INSTALL_PREFIX=../_install ..
   - make VERBOSE=1
   - make install
+  - xvfb-run xterm -e /bin/bash -c './xseturgent $WINDOWID && echo $WINDOWID > ok.txt'
+  - if ! test -e ok.txt; then echo Test FAILED; exit 1; fi
 jobs:
   include:
     - env: [ ACTION=omnilint ]
@@ -34,8 +36,10 @@ jobs:
             docker exec -t debian find "$PWD" \( -name '*.[ch]' -o -name '*.cc' \) -exec clang-tidy -p $PWD {} +
             exit $(($?+R))
 
-    - env: [ ACTION=build ]
+    - env: [ ACTION=coverage, CFLAGS=--coverage, CXXFLAGS=--coverage ]
       compiler: gcc
-    - env: [ ACTION=build ]
+      after_success:
+        - bash <(curl -s https://codecov.io/bash)
+    - env: [ ACTION=clang ]
       compiler: clang
 

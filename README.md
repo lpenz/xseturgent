@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/lpenz/xseturgent.png?branch=master)](https://travis-ci.org/lpenz/xseturgent) 
+[![codecov](https://codecov.io/gh/lpenz/xseturgent/branch/master/graph/badge.svg)](https://codecov.io/gh/lpenz/xseturgent)
 
 xseturgent
 ==========
