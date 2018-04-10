@@ -24,11 +24,6 @@ xseturgent: ${OBJ}
 	@echo CC -o $@
 	@${CC} -o $@ ${OBJ} ${LDFLAGS}
 
-readme:
-	@echo creating README
-	@groff -T utf8 -man < xseturgent.1 | col -bx | \
-		sed "s@VERSION@${VERSION}@g" > README
-
 clean:
 	@echo cleaning
 	@rm -f xseturgent ${OBJ} xseturgent-${VERSION}.tar.gz
@@ -58,4 +53,4 @@ uninstall:
 	@echo removing manual page from ${DESTDIR}${MANPREFIX}/man1
 	@rm -f ${DESTDIR}${MANPREFIX}/man1/xseturgent.1
 
-.PHONY: all readme options clean dist install uninstall
+.PHONY: all options clean dist install uninstall
