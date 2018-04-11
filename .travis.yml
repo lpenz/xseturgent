@@ -6,9 +6,8 @@ script:
   - cd _build
   - cmake -DCMAKE_INSTALL_PREFIX=../_install ..
   - make VERBOSE=1
+  - ctest $CTESTFLAGS
   - make install
-  - xvfb-run xterm -e /bin/bash -c './xseturgent $WINDOWID && echo $WINDOWID > ok.txt'
-  - if ! test -e ok.txt; then echo Test FAILED; exit 1; fi
 jobs:
   include:
     - env: [ ACTION=omnilint ]

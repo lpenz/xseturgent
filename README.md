@@ -12,12 +12,22 @@ xseturgent is a tool that sets/clears the urgency hint of a window in X11
 # Usage
 
 ~~~[.sh]
-xseturgent <windowid> [0|1]
+xseturgent -h
+xseturgent -V
+xseturgent [-i <windowid>] [-t <set/reset/toggle>]
 ~~~
 
 ## Options
 
-**windowid** The window ID, in decimal or hex.
+**-h** Help.
 
-**0|1** 1 to set (default) or 0 to clear.
+**-V** Version information.
+
+**-v** Verbose, show files changed.
+
+**-i windowid** The window ID, in decimal or hex. If not provided, use
+   the WINDOWID environment variable by default; fails if that doesn't
+   exist.
+
+**-t <set/reset/toggle>** What to do with the urgency hint.
 
