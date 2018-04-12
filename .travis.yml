@@ -6,7 +6,7 @@ script:
   - cd _build
   - cmake -DCMAKE_INSTALL_PREFIX=../_install ..
   - make VERBOSE=1
-  - ctest $CTESTFLAGS
+  - ctest -VV $CTESTFLAGS
   - make install
 jobs:
   include:
@@ -39,6 +39,13 @@ jobs:
       compiler: gcc
       after_success:
         - bash <(curl -s https://codecov.io/bash)
+    - env: [ ACTION=valgrind, CTESTFLAGS='-D ExperimentalMemCheck' ]
+      addons: { apt: { packages: [ xfonts-base, valgrind ] } }
     - env: [ ACTION=clang ]
       compiler: clang
-
+    - env: [ ACTION=clang-sanitize-memory, CFLAGS=-fsanitize=memory ]
+      compiler: clang
+    - env: [ ACTION=clang-sanitize-undefined, CFLAGS=-fsanitize=undefined ]
+      compiler: clang
+    - env: [ ACTION=clang-sanitize-safe-stack, CFLAGS=-fsanitize=safe-stack ]
+      compiler: clang
