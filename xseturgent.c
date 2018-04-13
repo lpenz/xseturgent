@@ -18,7 +18,7 @@
 #include <unistd.h>
 
 #define PROGRAM_NAME "xseturgent"
-#define PROGRAM_VERSION "1:1.5"
+#define PROGRAM_VERSION "2.0"
 
 enum op {
     URGENT_SET,
