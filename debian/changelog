@@ -1,0 +1,5 @@
+xseturgent (2.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- Leandro Lisboa Penz <lpenz@lpenz.org>  Fri, 13 Apr 2018 23:38:26 +0100

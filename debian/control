@@ -1,0 +1,15 @@
+Source: xseturgent
+Section: utils
+Priority: optional
+Maintainer: Leandro Lisboa Penz <lpenz@lpenz.org>
+Build-Depends: debhelper (>= 10), cmake (>= 2.6), make (>= 3.81-5), libc6-dev (>= 2.7-18), gcc (>= 4:4.3.2-2), coreutils (>= 6.10-6), libx11-dev (>= 2:1.6.0), pkg-config (>= 0.29)
+Standards-Version: 4.1.2
+Homepage: http://github.com/lpenz/xseturgent
+Vcs-Git: git://github.com/lpenz/xseturgent.git
+Vcs-Browser: http://github.com/lpenz/xseturgent
+
+Package: xseturgent
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Set/clear/toggle the urgency hint of a window in X11
+ xseturgent can manipulate the urgency hit in arbitrary X11 windows.
