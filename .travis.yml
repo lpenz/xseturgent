@@ -11,3 +11,15 @@ script:
   - docker rm -f debian
   - sudo chown -R "$USER:$USER" ../
   - ls -l ..
+deploy:
+  provider: packagecloud
+  repository: lpenz
+  username: lpenz
+  token:
+    secure: P1MhWo1ZcyCWURGWIHyCanr9Wo0TyKh86qqKZPQDKvboMwevzuinjzrTHPzQEQ+KPQ+1XjzrVxcdpQrRXrMICQd3wp1ybIXtqELL39Fv6r5XtgFSUe/5YSaQ3v6xaj3gtwFYeL67ZVfsSJ6mvvh/Q1qlL71AHiGAqdTH22l9nkKPQdz4C/58xVYKF+In2kjhRPJKMITb6EEVGX0panqgRIZyv73Y5KmLEx5dTq1cGDVhVRa2IEbJLo95dKxDkGUWVeJ6apsznC6MBIxvOjhtItorhlBoD+ob4kNuqnzJqadP+ghJSrQk/EtU3kNOfh6bukFo1S6nmkwZLHHfCNOiNQcqk8xw5et3OW++vqzY0bFV2+MDrABhl2fn7mXpuQNPx/R5w1sGp0WWDR9y5CrDZkQqVhvHXqkJcM+s8Zidi38/bqut9jsEopWVMV9Iep2hblKtkLLpdATHv+nLpAy7Oj86xteAuhz+YJEN08mlQVWUwvUarsxC/q3Cz5B1+7jSDBztwFJdtRFizim36svmRMfE/XX8tJhjxicj9l2L+3gQ2pcXItnG/AJ8FyN6wbYnVv185fwtL//jn/tviFOZ2b88ZFj2pp4BV65NO6gflMuWhBkmLBstZjsIVyJpI1rDr58DoMKulQfa7n3L/5BEaMgL6EUfbm/QxBjamhrMRko=
+  dist: debian/stretch
+  local-dir: '..'
+  package_glob: '*.deb'
+  on:
+    branch: debian-debian
+    tags: true
