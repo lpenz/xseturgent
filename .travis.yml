@@ -1,0 +1,13 @@
+---
+sudo: required # docker
+services:
+  - docker
+language: generic
+script:
+  - docker pull debian:stretch
+  - docker run -d --name debian -v "$PWD/..":/home debian:stretch sleep 9999999999
+  - docker exec -t debian /bin/bash -c "apt-get update && apt-get install -y --no-install-recommends git-buildpackage fakeroot cmake gcc build-essential debhelper libx11-dev pkg-config xvfb xauth xterm"
+  - docker exec -t debian /bin/bash -c "cd /home/xseturgent && gbp buildpackage --git-ignore-branch -us -uc"
+  - docker rm -f debian
+  - sudo chown -R "$USER:$USER" ../
+  - ls -l ..
