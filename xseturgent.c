@@ -1,7 +1,7 @@
 /****************************************************************************/
 /**
- * \file
- * \brief xseturgent is a tool that sets/clears the urgency hint of a
+ * @file
+ * @brief xseturgent is a tool that sets/clears the urgency hint of a
  * window in X11
  *
  * See LICENSE file for copyright and license details.
@@ -20,22 +20,32 @@
 #define PROGRAM_NAME "xseturgent"
 #define PROGRAM_VERSION "2.0"
 
+//! Enum for operation type
 enum op {
-    URGENT_SET,
-    URGENT_RESET,
-    URGENT_TOGGLE,
+    URGENT_SET,     //!< Set the urgency bit to 1
+    URGENT_RESET,   //!< Set the urgency bit to 0
+    URGENT_TOGGLE,  //!< Toggle the urgency bit
 };
 
-static int xseturgent_window(bool verbose, Display *dpy, Window winid,
+/**
+ * Operate on the urgency bit for the given display and window.
+ *
+ * @param verbose Set to true for more verbosity
+ * @param dpy Display as returned by XOpenDisplay
+ * @param windowid Window ID as shown by xwininfo
+ * @param op Operation to perform on urgency bit
+ */
+static int xseturgent_window(bool verbose, Display *dpy, Window windowid,
                              enum op op) {
     int ret = 0;
-    XWMHints *hints = XGetWMHints(dpy, winid);
+    XWMHints *hints = XGetWMHints(dpy, windowid);
     if (!hints) {
         fprintf(stderr, "Unable to get window manager hints.\n");
         return 20;
     }
     if (verbose)
-        printf("Window 0x%08lx has hint->flags 0x%08lx\n", winid, hints->flags);
+        printf("Window 0x%08lx has hint->flags 0x%08lx\n", windowid,
+               hints->flags);
     switch (op) {
         case URGENT_SET:
             hints->flags |= XUrgencyHint;
@@ -52,9 +62,9 @@ static int xseturgent_window(bool verbose, Display *dpy, Window winid,
             break;
     }
     if (verbose)
-        printf("Window 0x%08lx setting hint->flags 0x%08lx\n", winid,
+        printf("Window 0x%08lx setting hint->flags 0x%08lx\n", windowid,
                hints->flags);
-    if (!XSetWMHints(dpy, winid, hints)) {
+    if (!XSetWMHints(dpy, windowid, hints)) {
         fprintf(stderr, "Unable to set urgency hint.\n");
         ret = 30;
     }
@@ -64,6 +74,11 @@ static int xseturgent_window(bool verbose, Display *dpy, Window winid,
     return ret;
 }
 
+/**
+ * X11 error handler passed to XSetErrorHandler
+ *
+ * Just display the error information on stderr.
+ */
 static int error_handler(Display *d, XErrorEvent *e) {
     char msg[80];
     XGetErrorText(d, e->error_code, msg, sizeof(msg));
@@ -72,7 +87,16 @@ static int error_handler(Display *d, XErrorEvent *e) {
     return 0;
 }
 
-static int xseturgent(bool verbose, Window windowid, int urgent) {
+/**
+ * Operate on the urgency bit
+ *
+ * This function opens the display and makes sure that it's closed later.
+ *
+ * @param verbose Set to true for more verbosity
+ * @param windowid Window ID as shown by xwininfo
+ * @param op Operation to perform on urgency bit
+ */
+static int xseturgent(bool verbose, Window windowid, enum op op) {
     Display *dpy;
     int ret = 0;
 
@@ -85,7 +109,7 @@ static int xseturgent(bool verbose, Window windowid, int urgent) {
         return 10;
     }
 
-    ret = xseturgent_window(verbose, dpy, windowid, urgent);
+    ret = xseturgent_window(verbose, dpy, windowid, op);
 
     if (verbose) printf("Closing display\n");
     XCloseDisplay(dpy);
@@ -95,6 +119,7 @@ static int xseturgent(bool verbose, Window windowid, int urgent) {
 
 /****************************************************************************/
 
+//! USAGE help message
 const char USAGE[] =
     "Usage: " PROGRAM_NAME
     " [-V] [-v] [-h] [-i windowid] [-t operation]\n"
