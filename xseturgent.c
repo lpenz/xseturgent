@@ -10,6 +10,7 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <getopt.h>
 #include <limits.h>
 #include <stdarg.h>
 #include <stdbool.h>
