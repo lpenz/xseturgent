@@ -11,6 +11,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <limits.h>
+#include <stdarg.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -28,6 +29,23 @@ enum op {
 };
 
 /**
+ * Print message if verbose is true
+ *
+ * @param verbose Control if the message should go to stdout
+ * @param fmt Format string
+ * @seealso vprintf
+ */
+static void printf_if(bool verbose, const char *fmt, ...) {
+    va_list args;
+    if (!verbose) {
+        return;
+    }
+    va_start(args, fmt);
+    vprintf(fmt, args);
+    va_end(args);
+}
+
+/**
  * Operate on the urgency bit for the given display and window.
  *
  * @param verbose Set to true for more verbosity
@@ -43,9 +61,8 @@ static int xseturgent_window(bool verbose, Display *dpy, Window windowid,
         fprintf(stderr, "Unable to get window manager hints.\n");
         return 20;
     }
-    if (verbose)
-        printf("Window 0x%08lx has hint->flags 0x%08lx\n", windowid,
-               hints->flags);
+    printf_if(verbose, "Window 0x%08lx has hint->flags 0x%08lx\n", windowid,
+              hints->flags);
     switch (op) {
         case URGENT_SET:
             hints->flags |= XUrgencyHint;
@@ -61,14 +78,13 @@ static int xseturgent_window(bool verbose, Display *dpy, Window windowid,
             }
             break;
     }
-    if (verbose)
-        printf("Window 0x%08lx setting hint->flags 0x%08lx\n", windowid,
-               hints->flags);
+    printf_if(verbose, "Window 0x%08lx setting hint->flags 0x%08lx\n", windowid,
+              hints->flags);
     if (!XSetWMHints(dpy, windowid, hints)) {
         fprintf(stderr, "Unable to set urgency hint.\n");
         ret = 30;
     }
-    if (verbose) printf("Freeing hints\n");
+    printf_if(verbose, "Freeing hints\n");
     XFree(hints);
 
     return ret;
@@ -100,10 +116,10 @@ static int xseturgent(bool verbose, Window windowid, enum op op) {
     Display *dpy;
     int ret = 0;
 
-    if (verbose) printf("Setting error handler\n");
+    printf_if(verbose, "Setting error handler\n");
     XSetErrorHandler(error_handler);
 
-    if (verbose) printf("Opening display\n");
+    printf_if(verbose, "Opening display\n");
     if (!(dpy = XOpenDisplay(NULL))) {
         fprintf(stderr, "Unable to open display.\n");
         return 10;
@@ -111,7 +127,7 @@ static int xseturgent(bool verbose, Window windowid, enum op op) {
 
     ret = xseturgent_window(verbose, dpy, windowid, op);
 
-    if (verbose) printf("Closing display\n");
+    printf_if(verbose, "Closing display\n");
     XCloseDisplay(dpy);
 
     return ret;
