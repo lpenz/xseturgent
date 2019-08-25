@@ -1,5 +1,5 @@
 ---
-addons: { apt: { packages: [ xfonts-base ] } }
+addons: { apt: { packages: [ xfonts-base, xterm ] } }
 language: c
 script:
   - mkdir _build _install
@@ -40,7 +40,7 @@ jobs:
       after_success:
         - bash <(curl -s https://codecov.io/bash)
     - env: [ ACTION=valgrind, CTESTFLAGS='-D ExperimentalMemCheck' ]
-      addons: { apt: { packages: [ xfonts-base, valgrind ] } }
+      addons: { apt: { packages: [ xfonts-base, xterm, valgrind ] } }
     - env: [ ACTION=clang ]
       compiler: clang
     - env: [ ACTION=clang-sanitize-memory, CFLAGS=-fsanitize=memory ]
