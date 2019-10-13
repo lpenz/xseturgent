@@ -1,3 +1,9 @@
+xseturgent (2.0-4) UNRELEASED; urgency=medium
+
+  * Update to Debian Buster
+
+ -- Leandro Lisboa Penz <lpenz@lpenz.org>  Sun, 13 Oct 2019 17:13:44 +0100
+
 xseturgent (2.0-3) UNRELEASED; urgency=medium
 
   * Build for i386 and armhf
