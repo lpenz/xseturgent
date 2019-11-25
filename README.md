@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/lpenz/xseturgent.png?branch=master)](https://travis-ci.org/lpenz/xseturgent) 
-[![codecov](https://codecov.io/gh/lpenz/xseturgent/branch/master/graph/badge.svg)](https://codecov.io/gh/lpenz/xseturgent)
+[![CI](https://github.com/lpenz/xseturgent/actions/workflows/main.yml/badge.svg)](https://github.com/lpenz/xseturgent/actions/workflows/main.yml)
+[![coveralls](https://coveralls.io/repos/github/lpenz/xseturgent/badge.svg?branch=main)](https://coveralls.io/github/lpenz/xseturgent?branch=main)
 [![packagecloud](https://img.shields.io/badge/deb-packagecloud.io-844fec.svg)](https://packagecloud.io/app/lpenz/lpenz/search?q=xseturgent)
 
 xseturgent

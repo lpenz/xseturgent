@@ -8,16 +8,16 @@
  */
 /****************************************************************************/
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-#include <getopt.h>
-#include <limits.h>
-#include <stdarg.h>
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
+#include <X11/X.h>             // for Window
+#include <X11/Xlib.h>          // for XErrorEvent, Display, XCloseDisplay
+#include <X11/Xutil.h>         // for XWMHints, XUrgencyHint, XGetWMHints
+#include <bits/getopt_core.h>  // for optarg, getopt, optind
+#include <limits.h>            // for LONG_MAX
+#include <stdarg.h>            // for va_end, va_list, va_start
+#include <stdbool.h>           // for bool, false, true
+#include <stdio.h>             // for fprintf, stderr, printf, NULL, vprintf
+#include <stdlib.h>            // for strtol, getenv
+#include <string.h>            // for strcmp
 
 #define PROGRAM_NAME "xseturgent"
 #define PROGRAM_VERSION "2.0"
