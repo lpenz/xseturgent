@@ -1,4 +1,4 @@
-[![CI](https://github.com/lpenz/xseturgent/actions/workflows/main.yml/badge.svg)](https://github.com/lpenz/xseturgent/actions/workflows/main.yml)
+[![CI](https://github.com/lpenz/xseturgent/actions/workflows/ci.yml/badge.svg)](https://github.com/lpenz/xseturgent/actions/workflows/ci.yml)
 [![coveralls](https://coveralls.io/repos/github/lpenz/xseturgent/badge.svg?branch=main)](https://coveralls.io/github/lpenz/xseturgent?branch=main)
 [![packagecloud](https://img.shields.io/badge/deb-packagecloud.io-844fec.svg)](https://packagecloud.io/app/lpenz/lpenz/search?q=xseturgent)
 
