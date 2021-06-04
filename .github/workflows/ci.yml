@@ -45,3 +45,21 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: docker://lpenz/omnilint:v0.2
+  packagecloud:
+    needs: [ omnilint, clang-format, tests, coverage ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: docker://lpenz/ghaction-cmake:v0.12
+        with:
+          dependencies_debian: libx11-dev xvfb xauth xterm
+          preset: cpack
+      - uses: docker://lpenz/ghaction-packagecloud:v0.3
+        if: github.ref == 'refs/heads/main'
+        with:
+          repository: debian/debian/buster
+        env:
+          PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
+
