@@ -56,6 +56,9 @@ jobs:
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: cpack
+      - run: |
+          dpkg --info *.deb
+          dpkg --contents *.deb
       - uses: docker://lpenz/ghaction-packagecloud:v0.3
         if: github.ref == 'refs/heads/main'
         with:

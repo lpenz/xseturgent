@@ -48,7 +48,7 @@ install (
 
 set(CPACK_GENERATOR DEB)
 set(CPACK_PACKAGE_CONTACT "Leandro Lisboa Penz <lpenz@lpenz.org>")
-set(CPACK_PACKAGE_DESCRIPTION "Set urgency hints for X applications")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Set urgency hints for X applications")
 set(CPACK_DEBIAN_PACKAGE_SECTION utils)
 set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 execute_process(COMMAND git describe --tags
