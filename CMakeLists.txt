@@ -10,17 +10,18 @@ include(GNUInstallDirs)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -W")
-	set(CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -Wall -Werror -W")
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 find_package (PkgConfig REQUIRED)
 pkg_check_modules (X11 REQUIRED x11)
 link_libraries ("${X11_LIBRARIES}")
 
-# Main executable:
+# Main targets
+
 add_executable (xseturgent xseturgent.c)
 
-# Manual:
+# Manual
+
 add_custom_command(
 	OUTPUT xseturgent.1.gz
 	DEPENDS xseturgent.1
@@ -30,7 +31,8 @@ add_custom_command(
 	)
 add_custom_target(manual ALL DEPENDS xseturgent.1.gz)
 
-# Install:
+# Install
+
 install (
     TARGETS xseturgent
     DESTINATION bin/
@@ -57,7 +59,8 @@ string(REGEX REPLACE "-g[0-9a-f]+\n$" "" CPACK_PACKAGE_VERSION "${GIT_DESCRIBE}"
 set(CPACK_PACKAGE_FILE_NAME "xseturgent-${CPACK_PACKAGE_VERSION}")
 include(CPack)
 
-# Tests:
+# Tests
+
 include(CTest)
 
 add_test (NAME bare    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/test.sh)
