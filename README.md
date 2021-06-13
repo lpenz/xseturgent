@@ -5,12 +5,10 @@
 xseturgent
 ==========
 
-# About
-
 xseturgent is a tool that sets/clears the urgency hint of a window in X11
 
 
-# Usage
+## Usage
 
 ~~~[.sh]
 xseturgent -h
@@ -18,7 +16,7 @@ xseturgent -V
 xseturgent [-i <windowid>] [-t <set/reset/toggle>]
 ~~~
 
-## Options
+### Options
 
 **-h** Help.
 
