@@ -5,8 +5,6 @@ log=$(mktemp --suffix=.log)
 script=$(mktemp --suffix=.sh)
 trap 'rm -f $result $log $script' EXIT
 
-ulimit 512
-
 cat > "$script" <<EOF
 #!/bin/bash
 (set -x -e; ./xseturgent $*) 2>&1 | tee $log
