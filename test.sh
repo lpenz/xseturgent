@@ -7,7 +7,7 @@ trap 'rm -f $result $log $script' EXIT
 
 cat > "$script" <<EOF
 #!/bin/bash
-(set -x -e; ./xseturgent $*) 2>&1 | tee $log
+(set -e -x; ./xseturgent $*) 2>&1 | tee $log
 echo \${PIPESTATUS[0]} > $result
 EOF
 
