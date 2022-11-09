@@ -1,16 +1,21 @@
 ---
 name: CI
-on: [ push, pull_request ]
+on: [ workflow_dispatch, push, pull_request ]
 jobs:
+  omnilint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - uses: docker://lpenz/omnilint:0.5
   coverage:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: docker://lpenz/ghaction-cmake:0.15
+      - uses: actions/checkout@v3.1.0
+      - uses: docker://lpenz/ghaction-cmake:0.21.0
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: coverage
-      - uses: coverallsapp/github-action@master
+      - uses: coverallsapp/github-action@1.1.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: lcov.info
@@ -22,44 +27,38 @@ jobs:
             - iwyu
             - clang-tidy
             - install
-            - clang-sanitizer-address
-            - clang-sanitizer-memory
-            - clang-sanitizer-undefined
-            - clang-sanitizer-dataflow
-            - clang-sanitizer-safe-stack
+            - clang-sanitize-address
+            - clang-sanitize-memory
+            - clang-sanitize-undefined
+            - clang-sanitize-safe-stack
             - valgrind
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: docker://lpenz/ghaction-cmake:0.15
+      - uses: actions/checkout@v3.1.0
+      - uses: docker://lpenz/ghaction-cmake:0.21.0
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: ${{ matrix.preset }}
   clang-format:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: DoozyX/clang-format-lint-action@v0.5
-  omnilint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: docker://lpenz/omnilint:v0.2
+      - uses: actions/checkout@v3.1.0
+      - uses: DoozyX/clang-format-lint-action@v0.14
   packagecloud:
     needs: [ omnilint, clang-format, tests, coverage ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3.1.0
         with:
           fetch-depth: 0
-      - uses: docker://lpenz/ghaction-cmake:0.15
+      - uses: docker://lpenz/ghaction-cmake:0.21.0
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: cpack
       - run: |
           dpkg --info *.deb
           dpkg --contents *.deb
-      - uses: docker://lpenz/ghaction-packagecloud:v0.3
+      - uses: docker://lpenz/ghaction-packagecloud:0.4
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           repository: debian/debian/bullseye
