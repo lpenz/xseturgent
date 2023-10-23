@@ -6,12 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-      - uses: docker://lpenz/omnilint:0.5
+      - uses: docker://lpenz/omnilint:0.5.1
   coverage:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-      - uses: docker://lpenz/ghaction-cmake:0.21.0
+      - uses: docker://lpenz/ghaction-cmake:0.22.0
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: coverage
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.1.0
-      - uses: docker://lpenz/ghaction-cmake:0.21.0
+      - uses: docker://lpenz/ghaction-cmake:0.22.0
         with:
           dependencies_debian: libx11-dev xvfb xauth xterm
           preset: ${{ matrix.preset }}
@@ -50,39 +50,39 @@ jobs:
     strategy:
       matrix:
         variant:
-          - image: amd64
+          - image: debian-bullseye-amd64
             distro: debian
             version: bullseye
-          - image: ubuntu-focal-amd64
+          - image: debian-bookworm-amd64
+            distro: debian
+            version: bookworm
+          - image: ubuntu-jammy-amd64
             distro: ubuntu
-            version: focal
-          - image: raspbian-bullseye-armhf
-            distro: raspbian
-            version: bullseye
+            version: jammy
     steps:
       - uses: actions/checkout@v3.1.0
         with:
           fetch-depth: 0
       - uses: docker/setup-qemu-action@v2.1.0
-      - uses: docker://lpenz/ghaction-cmake:0.21.0-amd64
-        if: matrix.variant.image == 'amd64'
+      - uses: docker://lpenz/ghaction-cmake:0.22.0
+        if: matrix.variant.image == 'debian-bullseye-amd64'
         with:
           preset: cpack
-          dependencies_debian: libx11-dev xvfb xauth xterm
-      - uses: docker://lpenz/ghaction-cmake:0.21.0-ubuntu-focal-amd64
-        if: matrix.variant.image == 'ubuntu-focal-amd64'
+          dependencies_debian: gkrellm libgtk2.0-dev
+      - uses: docker://lpenz/ghaction-cmake:0.22.0
+        if: matrix.variant.image == 'debian-bookworm-amd64'
         with:
           preset: cpack
-          dependencies_debian: libx11-dev xvfb xauth xterm
-      - uses: docker://lpenz/ghaction-cmake:0.21.0-raspbian-bullseye-armhf
-        if: matrix.variant.image == 'raspbian-bullseye-armhf'
+          dependencies_debian: gkrellm libgtk2.0-dev
+      - uses: docker://lpenz/ghaction-cmake:0.22.0
+        if: matrix.variant.image == 'ubuntu-jammy-amd64'
         with:
           preset: cpack
-          dependencies_debian: libx11-dev xvfb xauth xterm
+          dependencies_debian: gkrellm libgtk2.0-dev
       - run: |
           for f in *.deb; do ls -l "$f"; dpkg --info "$f"; done
       - id: version
-        uses: docker://lpenz/ghaction-version-gen:0.11.0
+        uses: docker://lpenz/ghaction-version-gen:0.13.5
       - uses: docker://lpenz/ghaction-packagecloud:0.4
         if: steps.version.outputs.version_commit != ''
         with:
