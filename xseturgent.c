@@ -20,7 +20,7 @@
 #include <string.h>            // for strcmp
 
 #define PROGRAM_NAME "xseturgent"
-#define PROGRAM_VERSION "2.0.1"
+#define PROGRAM_VERSION "2.0.2"
 
 //! Enum for operation type
 enum op {
